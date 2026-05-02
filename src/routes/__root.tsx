@@ -29,12 +29,18 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Caliroots California — Streetwear Born In India" },
-      { name: "description", content: "India's fastest-growing streetwear brand. California-cool fits, premium quality and culture-driven drops." },
+      { title: "Demo Website" },
+      { name: "description", content: "India's fastest-growing streetwear brand. Cool fits, premium quality and culture-driven drops." },
       { name: "author", content: "The Caliroots" },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Caliroots California" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "Demo Website" },
+      { name: "twitter:title", content: "Demo Website" },
+      { property: "og:description", content: "India's fastest-growing streetwear brand. Cool fits, premium quality and culture-driven drops." },
+      { name: "twitter:description", content: "India's fastest-growing streetwear brand. Cool fits, premium quality and culture-driven drops." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0eab3ece-43af-4a77-b72e-82bd16cec4e4/id-preview-67cd5116--b1b593b4-cc65-4320-9543-bfcb30520bda.lovable.app-1777724101471.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0eab3ece-43af-4a77-b72e-82bd16cec4e4/id-preview-67cd5116--b1b593b4-cc65-4320-9543-bfcb30520bda.lovable.app-1777724101471.png" },
     ],
     links: [
       {

@@ -11,10 +11,14 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WomenRouteImport } from './routes/women'
 import { Route as StoresRouteImport } from './routes/stores'
+import { Route as OrderSuccessRouteImport } from './routes/order-success'
+import { Route as NewDropRouteImport } from './routes/new-drop'
 import { Route as MenRouteImport } from './routes/men'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProductIdRouteImport } from './routes/product.$id'
 
 const WomenRoute = WomenRouteImport.update({
   id: '/women',
@@ -24,6 +28,16 @@ const WomenRoute = WomenRouteImport.update({
 const StoresRoute = StoresRouteImport.update({
   id: '/stores',
   path: '/stores',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrderSuccessRoute = OrderSuccessRouteImport.update({
+  id: '/order-success',
+  path: '/order-success',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewDropRoute = NewDropRouteImport.update({
+  id: '/new-drop',
+  path: '/new-drop',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MenRoute = MenRouteImport.update({
@@ -36,6 +50,11 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -46,47 +65,99 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductIdRoute = ProductIdRouteImport.update({
+  id: '/product/$id',
+  path: '/product/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/men': typeof MenRoute
+  '/new-drop': typeof NewDropRoute
+  '/order-success': typeof OrderSuccessRoute
   '/stores': typeof StoresRoute
   '/women': typeof WomenRoute
+  '/product/$id': typeof ProductIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/men': typeof MenRoute
+  '/new-drop': typeof NewDropRoute
+  '/order-success': typeof OrderSuccessRoute
   '/stores': typeof StoresRoute
   '/women': typeof WomenRoute
+  '/product/$id': typeof ProductIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/men': typeof MenRoute
+  '/new-drop': typeof NewDropRoute
+  '/order-success': typeof OrderSuccessRoute
   '/stores': typeof StoresRoute
   '/women': typeof WomenRoute
+  '/product/$id': typeof ProductIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/contact' | '/men' | '/stores' | '/women'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/checkout'
+    | '/contact'
+    | '/men'
+    | '/new-drop'
+    | '/order-success'
+    | '/stores'
+    | '/women'
+    | '/product/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/men' | '/stores' | '/women'
-  id: '__root__' | '/' | '/about' | '/contact' | '/men' | '/stores' | '/women'
+  to:
+    | '/'
+    | '/about'
+    | '/checkout'
+    | '/contact'
+    | '/men'
+    | '/new-drop'
+    | '/order-success'
+    | '/stores'
+    | '/women'
+    | '/product/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/checkout'
+    | '/contact'
+    | '/men'
+    | '/new-drop'
+    | '/order-success'
+    | '/stores'
+    | '/women'
+    | '/product/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  CheckoutRoute: typeof CheckoutRoute
   ContactRoute: typeof ContactRoute
   MenRoute: typeof MenRoute
+  NewDropRoute: typeof NewDropRoute
+  OrderSuccessRoute: typeof OrderSuccessRoute
   StoresRoute: typeof StoresRoute
   WomenRoute: typeof WomenRoute
+  ProductIdRoute: typeof ProductIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -105,6 +176,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StoresRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/order-success': {
+      id: '/order-success'
+      path: '/order-success'
+      fullPath: '/order-success'
+      preLoaderRoute: typeof OrderSuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/new-drop': {
+      id: '/new-drop'
+      path: '/new-drop'
+      fullPath: '/new-drop'
+      preLoaderRoute: typeof NewDropRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/men': {
       id: '/men'
       path: '/men'
@@ -117,6 +202,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -133,16 +225,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/product/$id': {
+      id: '/product/$id'
+      path: '/product/$id'
+      fullPath: '/product/$id'
+      preLoaderRoute: typeof ProductIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  CheckoutRoute: CheckoutRoute,
   ContactRoute: ContactRoute,
   MenRoute: MenRoute,
+  NewDropRoute: NewDropRoute,
+  OrderSuccessRoute: OrderSuccessRoute,
   StoresRoute: StoresRoute,
   WomenRoute: WomenRoute,
+  ProductIdRoute: ProductIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

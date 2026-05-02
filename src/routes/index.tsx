@@ -34,10 +34,10 @@ export const Route = createFileRoute("/")({
 });
 
 const collections = [
-  { title: "Hoodies & Sweats", img: hoodieDuo, count: "48 styles" },
-  { title: "Oversized Tees", img: knits, count: "62 styles" },
-  { title: "Denim Lab", img: racks, count: "34 styles" },
-  { title: "Co-ord Sets", img: womanBlazer, count: "21 styles" },
+  { title: "Hoodies & Sweats", img: hoodieDuo, count: "48 styles", to: "/men" as const },
+  { title: "Oversized Tees", img: knits, count: "62 styles", to: "/men" as const },
+  { title: "Denim Lab", img: racks, count: "34 styles", to: "/women" as const },
+  { title: "Co-ord Sets", img: womanBlazer, count: "21 styles", to: "/women" as const },
 ];
 
 const values = [
@@ -142,7 +142,7 @@ function Home() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-5">
           {collections.map((c, i) => (
             <Link
-              to="/men"
+              to={c.to}
               key={c.title}
               className="group relative aspect-[3/4] overflow-hidden bg-muted hover-lift"
             >

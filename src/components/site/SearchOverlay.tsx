@@ -1,21 +1,22 @@
 import { useState, useEffect, useMemo } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Search, X } from "lucide-react";
-import { PRODUCTS, priceLabel } from "@/lib/products";
+import { useProducts, priceLabel } from "@/lib/products";
 import { Link } from "@tanstack/react-router";
 
 export function SearchOverlay({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boolean) => void }) {
   const [q, setQ] = useState("");
+  const { products } = useProducts();
 
   useEffect(() => { if (!open) setQ(""); }, [open]);
 
   const results = useMemo(() => {
     const s = q.trim().toLowerCase();
     if (!s) return [];
-    return PRODUCTS.filter(
+    return products.filter(
       (p) => p.name.toLowerCase().includes(s) || p.category.toLowerCase().includes(s) || p.gender.includes(s)
     ).slice(0, 8);
-  }, [q]);
+  }, [q, products]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

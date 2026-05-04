@@ -1,6 +1,6 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { getProduct, listByGender, priceLabel } from "@/lib/products";
+import { useProducts, useProduct, priceLabel } from "@/lib/products";
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { toast } from "sonner";
@@ -8,36 +8,45 @@ import { Minus, Plus, Truck, RotateCcw, ShieldCheck, ChevronRight } from "lucide
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export const Route = createFileRoute("/product/$id")({
-  loader: ({ params }) => {
-    const product = getProduct(params.id);
-    if (!product) throw notFound();
-    return { product };
-  },
-  head: ({ loaderData }) => ({
+  head: () => ({
     meta: [
-      { title: loaderData ? `${loaderData.product.name} | Caliroots` : "Product | Caliroots" },
-      { name: "description", content: loaderData?.product.description ?? "Caliroots product" },
-      { property: "og:image", content: loaderData?.product.img },
+      { title: "Product | Caliroots" },
+      { name: "description", content: "Caliroots premium streetwear product details." },
     ],
   }),
-  notFoundComponent: () => (
-    <SiteLayout>
-      <div className="mx-auto max-w-2xl px-5 py-32 text-center">
-        <h1 className="font-display text-5xl">PRODUCT NOT FOUND</h1>
-        <Link to="/men" className="btn-ink mt-6">BACK TO SHOP</Link>
-      </div>
-    </SiteLayout>
-  ),
   component: PDP,
 });
 
 function PDP() {
-  const { product } = Route.useLoaderData();
+  const { id } = Route.useParams();
+  const { product, loading } = useProduct(id);
+  const { products } = useProducts();
   const [size, setSize] = useState<string | null>(null);
   const [qty, setQty] = useState(1);
   const { add, setOpen } = useCart();
 
-  const related = listByGender(product.gender).filter((p) => p.id !== product.id).slice(0, 4);
+  if (loading && !product) {
+    return (
+      <SiteLayout>
+        <div className="mx-auto max-w-2xl px-5 py-32 text-center">
+          <p className="font-display tracking-widest text-sm text-muted-foreground">LOADING…</p>
+        </div>
+      </SiteLayout>
+    );
+  }
+
+  if (!product) {
+    return (
+      <SiteLayout>
+        <div className="mx-auto max-w-2xl px-5 py-32 text-center">
+          <h1 className="font-display text-5xl">PRODUCT NOT FOUND</h1>
+          <Link to="/men" className="btn-ink mt-6 inline-block">BACK TO SHOP</Link>
+        </div>
+      </SiteLayout>
+    );
+  }
+
+  const related = products.filter((p) => p.gender === product.gender && p.id !== product.id).slice(0, 4);
 
   const onAdd = (openCart: boolean) => {
     if (!size) {

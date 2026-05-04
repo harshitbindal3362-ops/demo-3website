@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { ProductGrid } from "@/components/site/ProductGrid";
-import { listNewDrop } from "@/lib/products";
+import { useProducts } from "@/lib/products";
 import hero from "@/assets/hero-streetwear.jpg";
 
 export const Route = createFileRoute("/new-drop")({
@@ -17,7 +17,8 @@ export const Route = createFileRoute("/new-drop")({
 });
 
 function NewDrop() {
-  const products = listNewDrop();
+  const { products: all } = useProducts();
+  const products = all.filter((p) => p.isNew);
   const cats = ["All", ...Array.from(new Set(products.map((p) => p.category)))];
 
   return (

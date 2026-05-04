@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { getProduct, type Product } from "@/lib/products";
+import { useProducts, type Product } from "@/lib/products";
 
 export type CartItem = {
   productId: string;
@@ -27,6 +27,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [open, setOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
+  const { products } = useProducts();
 
   useEffect(() => {
     try {
@@ -44,7 +45,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const value = useMemo<CartCtx>(() => {
     const resolved = items
       .map((i) => {
-        const product = getProduct(i.productId);
+        const product = products.find((p) => p.id === i.productId);
         return product ? { ...i, product } : null;
       })
       .filter(Boolean) as Array<CartItem & { product: Product }>;
@@ -73,7 +74,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         ),
       clear: () => setItems([]),
     };
-  }, [items, open]);
+  }, [items, open, products]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

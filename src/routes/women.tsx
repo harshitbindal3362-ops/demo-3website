@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { ProductGrid } from "@/components/site/ProductGrid";
-import { listByGender, WOMEN_CATEGORIES } from "@/lib/products";
+import { useProducts, WOMEN_CATEGORIES } from "@/lib/products";
 import hero from "@/assets/hero-women.jpg";
 
 export const Route = createFileRoute("/women")({
@@ -17,7 +17,8 @@ export const Route = createFileRoute("/women")({
 });
 
 function Women() {
-  const products = listByGender("women");
+  const { products: all } = useProducts();
+  const products = all.filter((p) => p.gender === "women");
 
   return (
     <SiteLayout>

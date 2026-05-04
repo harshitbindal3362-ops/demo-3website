@@ -58,6 +58,8 @@ function Home() {
             alt="Model in oversized Caliroots California hoodie on a Los Angeles palm boulevard at golden hour"
             width={1920}
             height={1080}
+            fetchPriority="high"
+            decoding="async"
             className="w-full h-full object-cover opacity-90"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent" />

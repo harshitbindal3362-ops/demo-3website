@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import { Search, ShoppingBag, User, Menu, X, LogOut } from "lucide-react";
+import { Search, ShoppingBag, User, Menu, X, LogOut, Settings } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { SearchOverlay } from "./SearchOverlay";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
@@ -21,6 +22,7 @@ export function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const { user, setOpen: setAuthOpen, signOut } = useAuth();
   const { count, setOpen: setCartOpen } = useCart();
+  const { isAdmin } = useIsAdmin();
 
   const onProfile = () => {
     if (user) return; // dropdown will show
@@ -70,6 +72,14 @@ export function Header() {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem disabled>My Orders</DropdownMenuItem>
                   <DropdownMenuItem disabled>Wishlist</DropdownMenuItem>
+                  {isAdmin && (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem asChild>
+                        <Link to="/admin"><Settings className="size-4 mr-2" /> Manage products</Link>
+                      </DropdownMenuItem>
+                    </>
+                  )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={async () => { await signOut(); toast.success("Signed out"); }}>
                     <LogOut className="size-4 mr-2" /> Sign out

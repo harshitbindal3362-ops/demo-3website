@@ -22,8 +22,16 @@ export const Route = createFileRoute("/admin")({
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
-  component: AdminPage,
+  component: AdminRoute,
 });
+
+function AdminRoute() {
+  return (
+    <SiteLayout>
+      <AdminPage />
+    </SiteLayout>
+  );
+}
 
 type Draft = {
   id: string;

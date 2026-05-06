@@ -369,6 +369,6 @@ function AdminPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </SiteLayout>
+    </>
   );
 }

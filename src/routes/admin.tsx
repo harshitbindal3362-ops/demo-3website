@@ -196,7 +196,6 @@ function AdminPage() {
   return (
     <>
       <div className="mx-auto max-w-[1400px] px-5 lg:px-10 py-12">
-      <div className="mx-auto max-w-[1400px] px-5 lg:px-10 py-12">
         <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
           <div>
             <p className="font-display text-xs tracking-[0.3em] text-hot">OWNER DASHBOARD</p>

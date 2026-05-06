@@ -22,8 +22,16 @@ export const Route = createFileRoute("/admin")({
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
-  component: AdminPage,
+  component: AdminRoute,
 });
+
+function AdminRoute() {
+  return (
+    <SiteLayout>
+      <AdminPage />
+    </SiteLayout>
+  );
+}
 
 type Draft = {
   id: string;
@@ -70,37 +78,31 @@ function AdminPage() {
 
   if (authLoading || roleLoading) {
     return (
-      <SiteLayout>
-        <div className="mx-auto max-w-4xl px-5 py-32 text-center">
-          <Loader2 className="size-6 animate-spin mx-auto" />
-        </div>
-      </SiteLayout>
+      <div className="mx-auto max-w-4xl px-5 py-32 text-center">
+        <Loader2 className="size-6 animate-spin mx-auto" />
+      </div>
     );
   }
 
   if (!user) {
     return (
-      <SiteLayout>
-        <div className="mx-auto max-w-2xl px-5 py-32 text-center">
-          <h1 className="font-display text-4xl">SIGN IN REQUIRED</h1>
-          <p className="text-muted-foreground mt-3">Please sign in with the owner account to manage products.</p>
-          <Button onClick={() => setOpen(true)} className="mt-6">Sign in</Button>
-        </div>
-      </SiteLayout>
+      <div className="mx-auto max-w-2xl px-5 py-32 text-center">
+        <h1 className="font-display text-4xl">SIGN IN REQUIRED</h1>
+        <p className="text-muted-foreground mt-3">Please sign in with the owner account to manage products.</p>
+        <Button onClick={() => setOpen(true)} className="mt-6">Sign in</Button>
+      </div>
     );
   }
 
   if (!isAdmin) {
     return (
-      <SiteLayout>
-        <div className="mx-auto max-w-2xl px-5 py-32 text-center">
-          <h1 className="font-display text-4xl">ACCESS DENIED</h1>
-          <p className="text-muted-foreground mt-3">
-            Only the owner account can access this area. You're signed in as <span className="font-mono">{user.email}</span>.
-          </p>
-          <Link to="/" className="btn-ink mt-6 inline-block">BACK TO HOME</Link>
-        </div>
-      </SiteLayout>
+      <div className="mx-auto max-w-2xl px-5 py-32 text-center">
+        <h1 className="font-display text-4xl">ACCESS DENIED</h1>
+        <p className="text-muted-foreground mt-3">
+          Only the owner account can access this area. You're signed in as <span className="font-mono">{user.email}</span>.
+        </p>
+        <Link to="/" className="btn-ink mt-6 inline-block">BACK TO HOME</Link>
+      </div>
     );
   }
 
@@ -192,7 +194,7 @@ function AdminPage() {
   };
 
   return (
-    <SiteLayout>
+    <>
       <div className="mx-auto max-w-[1400px] px-5 lg:px-10 py-12">
         <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
           <div>
@@ -366,6 +368,6 @@ function AdminPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </SiteLayout>
+    </>
   );
 }
